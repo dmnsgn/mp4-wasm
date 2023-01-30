@@ -20,10 +20,11 @@
   },
   "scripts": {
     "test": "serve .",
-    "build": "npm run clean && npm run build:wasm && npm run bundle:web && npm run bundle:node",
+    "build": "npm run clean && npm run build:wasm && npm run bundle:web && npm run bundle:web:embed && npm run bundle:node",
     "clean": "rimraf build && mkdir build",
     "build:wasm": "./build.sh",
     "bundle:web": "esbuild embuild/mp4.js --bundle --outfile=build/mp4.js --minify --sourcemap --format=esm",
+    "bundle:web:embed": "esbuild embuild/mp4.embed.js --bundle --outfile=build/mp4.embed.js --minify --format=esm",
     "bundle:node": "esbuild embuild/mp4.node.js --bundle --outfile=build/mp4.node.js --platform=node --minify --sourcemap --format=cjs"
   },
   "keywords": [

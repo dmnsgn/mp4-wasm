@@ -16,13 +16,15 @@ cd embuild
 
 rm -rf *.js
 
-cmake -DWEB=ON -DCMAKE_TOOLCHAIN_FILE=$EMSCRIPTEN/cmake/Modules/Platform/Emscripten.cmake ..
+cmake -DWEB=ON -DEMBED=OFF -DCMAKE_TOOLCHAIN_FILE=$EMSCRIPTEN/cmake/Modules/Platform/Emscripten.cmake ..
+cmake --build .
+
+cmake -DWEB=ON -DEMBED=ON -DCMAKE_TOOLCHAIN_FILE=$EMSCRIPTEN/cmake/Modules/Platform/Emscripten.cmake ..
 cmake --build .
 
 cmake -DWEB=OFF -DCMAKE_TOOLCHAIN_FILE=$EMSCRIPTEN/cmake/Modules/Platform/Emscripten.cmake ..
 cmake --build .
 
 cp mp4.wasm ../build/mp4.wasm
+cp mp4.embed.js ../build/mp4.embed.js
 cp mp4.node.wasm ../build/mp4.node.wasm
-
-

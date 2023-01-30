@@ -38,8 +38,9 @@ if(EMSCRIPTEN)
     target_compile_options(mp4
       PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>
     )
-    
+
     option(WEB "Use Web Env" OFF)
+    option(EMBED "Use embed in a single file" OFF)
 
     if (WEB)
       set(CMAKE_CXX_FLAGS "\
@@ -47,11 +48,23 @@ if(EMSCRIPTEN)
           -s EXPORT_ES6=1\
           -s ENVIRONMENT=web,worker\
       ")
-      set_target_properties(
-          mp4
-          PROPERTIES
-              SUFFIX ".js"
-      )
+      if (EMBED)
+        set(CMAKE_CXX_FLAGS "\
+            ${CMAKE_CXX_FLAGS}\
+            -s SINGLE_FILE=1\
+        ")
+        set_target_properties(
+            mp4
+            PROPERTIES
+                SUFFIX ".embed.js"
+        )
+      else ()
+        set_target_properties(
+              mp4
+              PROPERTIES
+                  SUFFIX ".js"
+          )
+      endif(EMBED)
     else ()
       set(CMAKE_CXX_FLAGS "\
           ${CMAKE_CXX_FLAGS}\
